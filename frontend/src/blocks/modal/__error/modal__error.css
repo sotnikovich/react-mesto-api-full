@@ -1,0 +1,8 @@
+.modal__error {
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 20px;
+    margin-top: 10px;
+    color: white;
+    text-align: left;
+}

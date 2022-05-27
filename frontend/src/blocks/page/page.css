@@ -1,0 +1,34 @@
+.page {
+    max-width: 880px;
+    margin: 0 auto;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+}
+
+@media screen and (max-width: 950px) {
+    .page {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .page {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .page {
+        width: 88.13%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .page {
+        width: 100%;
+    }
+}

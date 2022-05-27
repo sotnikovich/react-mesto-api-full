@@ -1,0 +1,10 @@
+.register__login {
+    padding: 0;
+    margin:0;
+    border: none;
+    color: white ;
+    background-color: black;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none
+}

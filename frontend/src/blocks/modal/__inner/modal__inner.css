@@ -1,0 +1,17 @@
+.modal__inner {
+    width: 430px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    padding: 34px 36px 37px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 2;
+}
+
+@media screen and (max-width: 500px) {
+  .modal__inner {
+    width: 90%;
+  }
+}

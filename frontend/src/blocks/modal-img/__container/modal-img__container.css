@@ -1,0 +1,5 @@
+.modal-img__container {
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}

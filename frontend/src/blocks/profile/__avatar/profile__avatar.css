@@ -1,0 +1,22 @@
+.profile__avatar {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin-right: 30px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.profile__avatar:hover {
+  background-color: #000;
+  opacity: 0.8;
+  cursor: url('../../../images/avatar-edit.svg'), move;
+}
+
+@media screen and (max-width: 680px) {
+  .profile__avatar {
+    margin-right: 0;
+    margin-bottom: 26px;
+  }
+}

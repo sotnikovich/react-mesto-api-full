@@ -1,0 +1,24 @@
+.modal__close {
+    background: url(../../../images/close.svg);
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    cursor: pointer;
+    border: 0;
+}
+
+.modal__close:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 530px) {
+    .modal__close {
+        top: -37px;
+        right: 0px;
+        background: url(../../../images/close-320.svg);
+        width: 20px;
+        height: 20px;
+    }
+}

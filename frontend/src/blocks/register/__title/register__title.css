@@ -1,0 +1,19 @@
+.register__title {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #FFFFFF;
+  margin-bottom: 50px;
+}
+
+@media screen and (min-width:320px) and (max-width: 551px) {
+  .register__title {
+    min-width: 260px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

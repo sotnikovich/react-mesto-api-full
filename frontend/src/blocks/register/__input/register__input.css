@@ -1,0 +1,15 @@
+.register__input {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    border: none;
+    border-bottom: 2px solid #CCCCCC;
+    padding-bottom: 13px;
+    outline: none;
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+}
+
+.register__input:last-of-type {
+  margin-top: 30px;
+}
