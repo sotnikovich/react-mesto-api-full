@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [values, setValues] = React.useState({ name: "", description: "" });
+  const [values, setValues] = React.useState({ name: "", about: "" });
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -12,14 +12,14 @@ function EditProfilePopup(props) {
   }
 
   React.useEffect(() => {
-    setValues({ name: currentUser.name, description: currentUser.about });
+    setValues({ name: currentUser.name, about: currentUser.about });
   }, [props.isOpen, currentUser]);
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onUpdateUser({
       name: values.name,
-      about: values.description,
+      about: values.about,
     });
   }
 
@@ -41,7 +41,7 @@ function EditProfilePopup(props) {
         maxLength="40"
         required
         autoComplete="off"
-        value={values.name || ""}
+        value={values.name || ''}
         onChange={handleChange}
       />
       <span className="modal__error" id="nameInputError"></span>
@@ -54,7 +54,7 @@ function EditProfilePopup(props) {
         maxLength="200"
         required
         autoComplete="off"
-        value={values.description || ""}
+        value={values.about || ''}
         onChange={handleChange}
       />
       <span className="modal__error" id="jobInputError"></span>

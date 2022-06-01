@@ -58,13 +58,13 @@ function Header(props) {
         )}
         {!props.loggedIn && (
           <nav>
-            {location.pathname === "/sign-in" && (
-              <NavLink className="header__navlink" to="/sign-up">
+            {location.pathname === "/signin" && (
+              <NavLink className="header__navlink" to="/signup">
                 Регистрация
               </NavLink>
             )}
-            {location.pathname === "/sign-up" && (
-              <NavLink className="header__navlink" to="/sign-in">
+            {location.pathname === "/signup" && (
+              <NavLink className="header__navlink" to="/signin">
                 Войти
               </NavLink>
             )}

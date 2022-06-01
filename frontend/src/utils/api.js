@@ -12,22 +12,31 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        "Content-Type": this._headers.contentType,
+      },
+      credentials: "include",
     }).then((res) => this._checkResult(res));
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}cards`, {
-      headers: this._headers,
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: {
+        "Content-Type": this._headers.contentType,
+      },
+      credentials: "include",
     }).then((res) => this._checkResult(res));
   }
 
   setUserInfo(data) {
-    return fetch(`${this._baseUrl}users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        "Content-Type": this._headers.contentType,
+      },
+      credentials: "include",
       body: JSON.stringify({
         name: data.name,
         about: data.about,
@@ -36,9 +45,12 @@ class Api {
   }
 
   addNewCard(data) {
-    return fetch(`${this._baseUrl}cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        "Content-Type": this._headers.contentType,
+      },
+      credentials: "include",
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -47,38 +59,32 @@ class Api {
   }
 
   deleteCard(data) {
-    return fetch(`${this._baseUrl}cards/${data}`, {
+    return fetch(`${this._baseUrl}/cards/${data}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        "Content-Type": this._headers.contentType,
+      },
+      credentials: "include",
     }).then((res) => this._checkResult(res));
   }
 
-  setLike(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then((res) => this._checkResult(res));
-  }
-
-  changeLikeCardStatus(id, isLiked) {
-    if (isLiked) {
-      return this.deleteLike(id);
-    } else {
-      return this.setLike(id);
-    }
-  }
-
-  deleteLike(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
-      method: "DELETE",
-      headers: this._headers,
+  handleLike(item, like) {
+    return fetch(`${this._baseUrl}/cards/${item}/likes`, {
+      method: like ? "DELETE" : "PUT",
+      headers: {
+        "Content-Type": this._headers.contentType,
+      },
+      credentials: "include",
     }).then((res) => this._checkResult(res));
   }
 
   setUserAvatar(data) {
-    return fetch(`${this._baseUrl}users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        "Content-Type": this._headers.contentType,
+      },
+      credentials: "include",
       body: JSON.stringify({
         avatar: data.avatar,
       }),
@@ -87,10 +93,9 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort36/",
+  baseUrl: "https://api.felaw.mesto.nomoreparties.sbs",
   headers: {
-    authorization: "8c8ed8aa-4046-4be0-b3e7-9f814b718ab1",
-    "Content-Type": "application/json",
+    contentType: "application/json",
   },
 });
 

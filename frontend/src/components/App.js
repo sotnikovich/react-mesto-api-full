@@ -3,6 +3,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
+import InfoTooltip from "./InfoTooltip";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -10,7 +11,6 @@ import ConfirmPopup from "./ConfirmPopup";
 import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
 import Login from "./Login";
-import InfoTooltip from "./InfoTooltip";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { Switch, Route, useHistory } from "react-router-dom";
 import * as auth from "../utils/auth";
@@ -70,20 +70,87 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  useEffect(() => {
-    handleCheckToken();
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([data, cards]) => {
-        setCurrentUser(data);
-        setCards(cards);
+  function closeAllPopups() {
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setEditAvatarPopupOpen(false);
+    setImagePopupOpen(false);
+    setConfirmPopupOpen(false);
+    setIsInfoTooltipOpen(false);
+    setSelectedCard({});
+  }
+
+  const checkAuth = () => {
+    auth
+      .getContent()
+      .then((data) => {
+        if (data) {
+          setEmail(data.email);
+          setLoggedIn(true);
+          history.push("/");
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    checkAuth();
   }, []);
 
+  useEffect(() => {
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([data, cards]) => {
+          setCurrentUser(data);
+          setCards(cards);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
+
+  const handleRegister = (email, password) => {
+    auth
+      .register(email, password)
+      .then(() => {
+        setIsRegSuccess(true);
+        setIsInfoTooltipOpen(true);
+        history.push("/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsInfoTooltipOpen(true);
+        setIsRegSuccess(false);
+      });
+  };
+
+  function handleLogin(email, password) {
+    auth
+      .login(email, password)
+      .then((res) => {
+        setLoggedIn(true);
+        setEmail(email);
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsInfoTooltipOpen(true);
+        setIsRegSuccess(false);
+      });
+  }
+
+  function handleLogOut() {
+    setLoggedIn(false);
+    history.push("/signin");
+  }
+
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((item) => {
+      return item === currentUser._id;
+    });
     api
-      .changeLikeCardStatus(card._id, isLiked)
+      .handleLike(card._id, isLiked)
       .then((newCard) => {
         const newCards = cards.map((currentCard) =>
           currentCard._id === card._id ? newCard : currentCard
@@ -124,69 +191,6 @@ function App() {
       });
   }
 
-  function closeAllPopups() {
-    setEditProfilePopupOpen(false);
-    setAddPlacePopupOpen(false);
-    setEditAvatarPopupOpen(false);
-    setImagePopupOpen(false);
-    setConfirmPopupOpen(false);
-    setIsInfoTooltipOpen(false);
-    setSelectedCard({});
-  }
-
-  function handleLogOut() {
-    localStorage.removeItem("token");
-    setLoggedIn(false);
-    history.push("/sign-in");
-  }
-
-  function handleCheckToken() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      auth
-        .checkToken(token)
-        .then((res) => {
-          setLoggedIn(true);
-          setEmail(res.data.email);
-          history.push("/");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
-
-  function handleLogin(email, password) {
-    auth
-      .authorize(email, password)
-      .then((res) => {
-        localStorage.setItem("token", res.token);
-        setLoggedIn(true);
-        setEmail(email);
-        history.push("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsInfoTooltipOpen(true);
-        setIsRegSuccess(false);
-      });
-  }
-
-  function handleRegistration(email, password) {
-    auth
-      .register(email, password)
-      .then(() => {
-        setIsRegSuccess(true);
-        setIsInfoTooltipOpen(true);
-        history.push("/sign-in");
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsInfoTooltipOpen(true);
-        setIsRegSuccess(false);
-      });
-  }
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -206,9 +210,9 @@ function App() {
             component={Main}
           >
             <Main />
-            <Footer />
           </ProtectedRoute>
         </Switch>
+        <Footer />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
@@ -238,11 +242,11 @@ function App() {
           isOpen={isInfoTooltipOpen}
           onClose={closeAllPopups}
           isRegSuccess={isRegSuccess}
-        ></InfoTooltip>
-        <Route path="/sign-up">
-          <Register onSubmit={handleRegistration} />
+        />
+        <Route path="/signup">
+          <Register onSubmit={handleRegister} />
         </Route>
-        <Route path="/sign-in">
+        <Route path="/signin">
           <Login onSubmit={handleLogin} />
         </Route>
       </div>

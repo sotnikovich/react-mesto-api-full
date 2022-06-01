@@ -1,4 +1,4 @@
-export const BASE_URL = "https://auth.nomoreparties.co/";
+export const BASE_URL = "https://api.felaw.mesto.nomoreparties.sbs";
 
 const checkResult = (res) => {
   if (res.ok) {
@@ -8,38 +8,36 @@ const checkResult = (res) => {
 };
 
 export const register = (email, password) => {
-  return fetch(`${BASE_URL}signup`, {
+  return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ email, password }),
   }).then(checkResult);
 };
 
-export const authorize = (email, password) => {
-  return fetch(`${BASE_URL}signin`, {
+export const login = (email, password) => {
+  return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ email, password }),
-  })
-    .then(checkResult)
-    .then((data) => {
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        return data;
-      }
-    });
+  }).then(checkResult);
 };
 
-export const checkToken = (token) => {
-  return fetch(`${BASE_URL}users/me`, {
+export const getContent = () => {
+  return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
-      authorization: `Bearer ${token}`,
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
+    credentials: "include",
   }).then(checkResult);
 };

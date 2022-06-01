@@ -1,39 +1,44 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Card(props) {
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const isOwn = props.card.owner._id === currentUser._id;
-  const isLiked = props.card.likes.some((i) => i._id === currentUser._id);
-  const cardDeleteButtonClassName = `${
-    isOwn ? "element__delete element__delete_active" : "element__delete"
-  }`;
+  const isLiked = card.likes.some((item) => {
+    return item === currentUser._id;
+  });
+
   const cardLikeButtonClassName = `${
     isLiked ? "element__like element__like_active" : "element__like"
   }`;
 
+  const isOwn = card.owner === currentUser._id;
+
+  const cardDeleteButtonClassName = `${
+    isOwn ? "element__delete element__delete_active" : "element__delete"
+  }`;
+
   function handleCardClick() {
-    props.onCardClick(props.card);
+    onCardClick(card);
   }
 
   function handleCardLike() {
-    props.onCardLike(props.card);
+    onCardLike(card);
   }
 
   function handleCardDelete() {
-    props.onCardDelete(props.card);
+    onCardDelete(card);
   }
 
   return (
     <article className="element">
       <img
         onClick={handleCardClick}
-        src={props.card.link}
-        alt={props.card.name}
+        src={card.link}
+        alt={card.name}
         className="element__img"
       />
       <div className="element__signature">
-        <h2 className="element__caption">{props.card.name}</h2>
+        <h2 className="element__caption">{card.name}</h2>
         <div className="element__button">
           <button
             className={cardLikeButtonClassName}
@@ -41,7 +46,7 @@ function Card(props) {
             type="button"
             aria-label="лайк"
           ></button>
-          <p className="element__counter">{props.card.likes.length}</p>
+          <p className="element__counter">{card.likes.length}</p>
         </div>
         <button
           className={cardDeleteButtonClassName}

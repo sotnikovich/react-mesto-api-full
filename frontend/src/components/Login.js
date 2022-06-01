@@ -56,6 +56,7 @@ function Login({ onSubmit }) {
     e.preventDefault();
     onSubmit(email, password);
   }
+
   return (
     <div className="register">
       <h2 className="register__title">Вход</h2>

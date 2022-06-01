@@ -84,6 +84,7 @@ function Register({ onSubmit }) {
           value={password}
           onChange={passwordHandler}
           required
+          autoComplete="current-password"
         />
         {actPass && passErr && <span className="modal__error">{passErr}</span>}
         <button
@@ -94,7 +95,7 @@ function Register({ onSubmit }) {
         >
           Зарегистрироваться
         </button>
-        <Link to="/sign-in" className="register__login hover">
+        <Link to="/signin" className="register__login hover">
           Уже зарегистрированы? Войти
         </Link>
       </form>
