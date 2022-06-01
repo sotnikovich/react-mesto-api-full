@@ -18,7 +18,7 @@ app.use(cookieParser());
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(cors({
-  origin: ['https://felaw.mesto.nomoreparties.sbs', 'http://felaw.mesto.nomoreparties.sbs'],
+  origin: 'https://felaw.mesto.nomoreparties.sbs',
   credentials: true,
 }));
 
