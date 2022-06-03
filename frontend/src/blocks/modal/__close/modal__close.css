@@ -1,5 +1,5 @@
 .modal__close {
-    background: url(../../../images/close.svg);
+    background: url(../../../images/close.svg) no-repeat;
     width: 32px;
     height: 32px;
     position: absolute;
