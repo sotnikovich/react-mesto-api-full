@@ -4,3 +4,5 @@
 Публичный IP-адрес сервера: 84.252.138.33
 
 [Домен](https://felaw.mesto.nomoreparties.sbs)
+
+[Домен сервера](https://api.felaw.mesto.nomoreparties.sbs)
