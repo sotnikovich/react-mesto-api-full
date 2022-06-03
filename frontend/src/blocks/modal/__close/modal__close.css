@@ -17,7 +17,7 @@
     .modal__close {
         top: -37px;
         right: 0px;
-        background: url(../../../images/close-320.svg);
+        background: url(../../../images/close-320.svg) no-repeat;
         width: 20px;
         height: 20px;
     }
