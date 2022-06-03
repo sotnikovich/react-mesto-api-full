@@ -30,13 +30,12 @@ app.get('/crash-test', () => {
 
 app.use(express.json());
 app.use(requestLogger);
-app.use(errorLogger);
 app.post('/signup', userValidation, createUser);
 app.post('/signin', loginValidation, login);
 app.use(auth);
-app.use('/users', require('./routes/users'));
-app.use('/cards', require('./routes/cards'));
+app.use(require('./routes/errorPath'));
 
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 app.listen(PORT);

@@ -19,7 +19,11 @@ module.exports.createCard = (req, res, next) => {
   } = req.body;
 
   return Card.create({
-    name, link, createdAt, likes, owner: ownerId,
+    name,
+    link,
+    createdAt,
+    likes,
+    owner: ownerId,
   })
     .then((card) => {
       res.status(200).send(card);
@@ -74,10 +78,9 @@ module.exports.deleteCard = (req, res, next) => {
     .then((card) => {
       if (!card.owner.equals(req.user._id)) {
         next(new Forbidden('Нельзя удалить чужую карточку'));
-      } else {
-        Card.deleteOne(card)
-          .then(() => res.status(200).send(card));
       }
+      return Card.deleteOne(card)
+        .then(() => res.status(200).send(card));
     })
     .catch(next);
 };
