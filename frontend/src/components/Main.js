@@ -41,7 +41,7 @@ function Main(props) {
             onCardLike={props.onCardLike}
             onCardDelete={props.onCardDelete}
           />
-        ))}
+        )).reverse()}
       </section>
     </main>
   );
